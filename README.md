@@ -17,3 +17,9 @@ make schema
 The container is set up and ready to run. As soon as you launch an instance of
 this container, it will bring up the postgres database, start processing (you
 may wish to customize)
+
+## LICENSE
+
+GPLv3
+
+(This does not preclude you [customising a copy of this](https://www.gnu.org/licenses/gpl-faq.en.html#GPLOutput), producing output, and [not sharing the customisations](https://www.gnu.org/licenses/gpl-faq.en.html#GPLRequireSourcePostedPublic) to the main program.)

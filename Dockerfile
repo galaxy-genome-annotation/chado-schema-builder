@@ -39,7 +39,6 @@ ENV GMOD_ROOT /usr/share/gmod/
 
 RUN mkdir -p $GMOD_ROOT /build
 WORKDIR /build
-
 ADD load.conf.tt2 /opt/load.conf.tt2
 
 ADD build.sh /docker-entrypoint-initdb.d/build.sh

@@ -1,10 +1,11 @@
 #!/bin/bash
-wget --quiet "https://github.com/GMOD/Chado/archive/${VERSION}.tar.gz"
-
-tar xfz "${VERSION}.tar.gz"
-cd "Chado-${VERSION}/chado/" || exit;
+wget --quiet "https://github.com/GMOD/Chado/archive/${BRANCH}.tar.gz"
+tar xfz "${BRANCH}.tar.gz"
+cd "Chado-${BRANCH}/chado/" || exit;
 
 mv /opt/load.conf.tt2 /build/Chado-master/chado/load/tt2/load.conf.tt2
+
+VERSION=$(cat Makefile.PL | grep 'my $VERSION' | sed 's/.* = //g;s/;//';)
 
 yes | perl Makefile.PL GMOD_ROOT="$GMOD_ROOT" DEFAULTS=1 RECONFIGURE=1
 make

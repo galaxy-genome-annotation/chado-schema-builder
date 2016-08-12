@@ -4,7 +4,7 @@ wget --quiet "https://github.com/GMOD/Chado/archive/${VERSION}.tar.gz"
 tar xfz "${VERSION}.tar.gz"
 cd "Chado-${VERSION}/chado/" || exit;
 
-mv /opt/load.conf.tt2 /build/Chado-master/chado/load/tt2/load.conf.tt2
+mv /opt/load.conf.tt2 /build/Chado-${VERSION}/chado/load/tt2/load.conf.tt2
 
 yes | perl Makefile.PL GMOD_ROOT="$GMOD_ROOT" DEFAULTS=1 RECONFIGURE=1
 make

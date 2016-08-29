@@ -1,6 +1,13 @@
 #!/bin/bash
 set -ex
 wget --quiet "https://github.com/GMOD/Chado/archive/${BRANCH}.tar.gz"
+
+# Download ontologies
+wget --quiet "http://song.cvs.sourceforge.net/*checkout*/song/ontology/so.obo"
+wget --quiet "http://geneontology.org/ontology/go.obo"
+wget --quiet "https://raw.githubusercontent.com/Planteome/plant-ontology/master/po.obo"
+wget --quiet "https://raw.githubusercontent.com/phenoscape/taxrank/master/taxrank.obo"
+
 tar xfz "${BRANCH}.tar.gz"
 cd "Chado-${BRANCH}/chado/" || exit;
 
@@ -16,7 +23,13 @@ make prepdb
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}-no-onto.sql"
 echo "1" | make ontologies
 psql -h localhost -p 5432 -U postgres -c "UPDATE cvterm SET cv_id = 7 WHERE cv_id IN (SELECT cv_id FROM cv WHERE name='ro')"
-echo "2,3,4,5,6" | make ontologies
+
+gmod_load_cvterms.pl -s SO /build/so.obo
+gmod_load_cvterms.pl -s GO /build/go.obo
+gmod_load_cvterms.pl -s SOFP load/etc/feature_property.obo
+gmod_load_cvterms.pl -s PO /build/po.obo
+gmod_load_cvterms.pl -s TAXRANK /build/taxrank.obo
+
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}.sql"
 psql -h localhost -p 5432 -U postgres -c 'ALTER SCHEMA public RENAME TO chado'
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}-tripal.sql"

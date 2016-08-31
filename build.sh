@@ -26,4 +26,4 @@ gzip < "/host/chado-${VERSION}.sql"         > "/host/chado-${VERSION}.sql.gz"
 gzip < "/host/chado-${VERSION}-tripal.sql"  > "/host/chado-${VERSION}-tripal.sql.gz"
 
 echo "The schema build has completed. The container will now intentionally crash"
-exit 1;
+exit 42;

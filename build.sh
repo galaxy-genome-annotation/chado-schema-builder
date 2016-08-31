@@ -30,6 +30,16 @@ gmod_load_cvterms.pl -s SOFP load/etc/feature_property.obo
 gmod_load_cvterms.pl -s PO /build/po.obo
 gmod_load_cvterms.pl -s TAXRANK /build/taxrank.obo
 
+# Populate cvtermpath table
+psql -h localhost -p 5432 -U postgres < /opt/cvtermpath_fix.sql
+echo "select * from fill_cvtermpath('sequence');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('plant_anatomy');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('plant_structure_development_stage');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('taxonomic_rank');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('biological_process');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('molecular_function');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('cellular_component');" | psql -h localhost -p 5432 -U postgres
+
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}.sql"
 psql -h localhost -p 5432 -U postgres -c 'ALTER SCHEMA public RENAME TO chado'
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}-tripal.sql"

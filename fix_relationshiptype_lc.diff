@@ -1,0 +1,31 @@
+diff --git a/bin/gmod_load_cvterms.pl b/bin/gmod_load_cvterms.pl
+index 6414639..b423fa7 100644
+--- a/bin/gmod_load_cvterms.pl
++++ b/bin/gmod_load_cvterms.pl
+@@ -306,7 +306,7 @@ foreach my $new_ont(@onts) {
+ 		});
+ 	    #maybe it's stored with another cv_id?
+ 	    if ($p_term) {
+-		message("predicate term '" .$t->name() . "' already exists with cv_id " . $p_term->get_column('cv_id') . "\n", 1);
++		message("predicate term '" .lc($t->name()) . "' already exists with cv_id " . $p_term->get_column('cv_id') . "\n", 1);
+ 	    }else { #the predicate term will be stored at the time of storing a term with that relationship, using the term's cv_id
+
+ 		#this stores the relationship types under 'relationship' cv namespace
+@@ -314,7 +314,7 @@ foreach my $new_ont(@onts) {
+ 		#but with the current ontology cv namespace .
+ 		#To do this we need to add to the obo parser (Bio::OntologyIO::obo.pm)
+ 		#a 'get_typedefs' funciton
+-                my $accession = $t->identifier() || $t->name();
++                my $accession = $t->identifier() || lc($t->name());
+                 message("Predicate term $accession will be stored later if used as a relationship in an ontology term\n",1);
+ 	    }
+ 	}
+@@ -694,7 +694,7 @@ foreach my $new_ont(@onts) {
+ 		}
+ 		############################################
+                 push @novel_relationships, $r;
+-		my $predicate_term_name = $file_relationships{$r}->predicate_term()->name();
++		my $predicate_term_name = lc($file_relationships{$r}->predicate_term()->name());
+
+ 		my $predicate_term;
+ 		my ($rel_db)= $schema->resultset('General::Db')->search( { name => 'OBO_REL' } );

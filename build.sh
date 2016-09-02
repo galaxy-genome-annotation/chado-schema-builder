@@ -11,6 +11,8 @@ wget --quiet "https://raw.githubusercontent.com/phenoscape/taxrank/master/taxran
 tar xfz "${BRANCH}.tar.gz"
 cd "Chado-${BRANCH}/chado/" || exit;
 
+patch -p1 < /opt/fix_relationshiptype_lc.diff
+
 mv /opt/load.conf.tt2 /build/Chado-${BRANCH}/chado/load/tt2/load.conf.tt2
 
 VERSION=$(cat Makefile.PL | grep 'my $VERSION' | sed 's/.* = //g;s/;//';)

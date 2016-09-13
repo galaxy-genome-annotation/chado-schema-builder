@@ -41,5 +41,6 @@ RUN mkdir -p $GMOD_ROOT /build
 WORKDIR /build
 ADD load.conf.tt2 /opt/load.conf.tt2
 ADD cvtermpath_fix.sql /opt/cvtermpath_fix.sql
+ADD update_urls.sql /opt/update_urls.sql
 
 ADD build.sh /docker-entrypoint-initdb.d/build.sh

@@ -53,5 +53,8 @@ gzip < "/host/chado-${VERSION}-no-onto.sql" > "/host/chado-${VERSION}-no-onto.sq
 gzip < "/host/chado-${VERSION}.sql"         > "/host/chado-${VERSION}.sql.gz"
 gzip < "/host/chado-${VERSION}-tripal.sql"  > "/host/chado-${VERSION}-tripal.sql.gz"
 
+# Remove non-gzipped versions, zero value.
+rm /host/chado-${VERSION}*.sql
+
 echo "The schema build has completed. The container will now intentionally crash"
 exit 42;

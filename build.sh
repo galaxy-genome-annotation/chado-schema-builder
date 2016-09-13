@@ -11,6 +11,8 @@ wget --quiet "https://raw.githubusercontent.com/phenoscape/taxrank/master/taxran
 tar xfz "${BRANCH}.tar.gz"
 cd "Chado-${BRANCH}/chado/" || exit;
 
+patch -p1 < /opt/fix_relationshiptype_lc.diff
+
 mv /opt/load.conf.tt2 /build/Chado-${BRANCH}/chado/load/tt2/load.conf.tt2
 
 VERSION=$(cat Makefile.PL | grep 'my $VERSION' | sed 's/.* = //g;s/;//';)
@@ -39,6 +41,9 @@ echo "select * from fill_cvtermpath('taxonomic_rank');" | psql -h localhost -p 5
 echo "select * from fill_cvtermpath('biological_process');" | psql -h localhost -p 5432 -U postgres
 echo "select * from fill_cvtermpath('molecular_function');" | psql -h localhost -p 5432 -U postgres
 echo "select * from fill_cvtermpath('cellular_component');" | psql -h localhost -p 5432 -U postgres
+
+# Update links to external dbs
+psql -h localhost -p 5432 -U postgres < /opt/update_urls.sql
 
 pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > "/host/chado-${VERSION}.sql"
 psql -h localhost -p 5432 -U postgres -c 'ALTER SCHEMA public RENAME TO chado'

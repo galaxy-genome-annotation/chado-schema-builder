@@ -15,7 +15,7 @@ patch -p1 < /opt/fix_relationshiptype_lc.diff
 
 mv /opt/load.conf.tt2 /build/Chado-${BRANCH}/chado/load/tt2/load.conf.tt2
 # Remove old versions in case bad things happen
-rm /host/*
+rm -f /host/*
 
 VERSION=$(cat Makefile.PL | grep 'my $VERSION' | sed 's/.* = //g;s/;//';)
 

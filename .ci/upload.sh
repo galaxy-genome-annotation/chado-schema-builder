@@ -1,4 +1,5 @@
 #!/bin/bash
+set -ex
 OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-$(pwd)/output}";
 if [ ! -e ghr  ]; then
 	wget "https://github.com/tcnksm/ghr/releases/download/v0.4.0/ghr_v0.4.0_linux_amd64.zip";
@@ -6,5 +7,5 @@ if [ ! -e ghr  ]; then
 	chmod +x ghr
 fi
 
-CHADO_VERSION=$(find ${OUTPUT_DIRECTORY}/chado-*.sql.gz | grep -o 'chado-[/0-9.]*.sql.gz' | sed 's/chado-//g;s/\.sql\.gz//g;')
+CHADO_VERSION=$(find "${OUTPUT_DIRECTORY}" | grep -o 'chado-[/0-9.]*.sql.gz' | sed 's/chado-//g;s/\.sql\.gz//g;')
 ./ghr -u erasche -r chado-schema-builder "${CHADO_VERSION}-jenkins${BUILD_ID}" "${OUTPUT_DIRECTORY}"

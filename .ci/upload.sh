@@ -6,5 +6,5 @@ if [ ! -e ghr  ]; then
 	chmod +x ghr
 fi
 
-CHADO_VERSION=$(find ${OUTPUT_DIRECTORY}/chado-*.sql | grep -o 'chado-[/0-9.]*.sql' | sed 's/chado-//g;s/\.sql//g;')
+CHADO_VERSION=$(find ${OUTPUT_DIRECTORY}/chado-*.sql.gz | grep -o 'chado-[/0-9.]*.sql.gz' | sed 's/chado-//g;s/\.sql\.gz//g;')
 ./ghr -u erasche -r chado-schema-builder "${CHADO_VERSION}-jenkins${BUILD_ID}" "${OUTPUT_DIRECTORY}"

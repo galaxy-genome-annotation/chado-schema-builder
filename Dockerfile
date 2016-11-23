@@ -43,5 +43,6 @@ ADD load.conf.tt2 /opt/load.conf.tt2
 ADD cvtermpath_fix.sql /opt/cvtermpath_fix.sql
 ADD update_urls.sql /opt/update_urls.sql
 ADD fix_relationshiptype_lc.diff /opt/fix_relationshiptype_lc.diff
+ADD obo_extract_typedefs.py /opt/obo_extract_typedefs.py
 
 ADD build.sh /docker-entrypoint-initdb.d/build.sh

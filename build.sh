@@ -1,5 +1,12 @@
 #!/bin/bash
 set -ex
+
+function fix_typedefs () {
+    python /opt/obo_extract_typedefs.py /build/${1}.obo /build/${1}_typedefs.obo
+    go2fmt.pl -p obo_text -w xml /build/${1}_typedefs.obo | go-apply-xslt oboxml_to_chadoxml - > /build/${1}_typedefs.xml
+    stag-storenode.pl -d 'dbi:Pg:dbname=postgres;host=localhost;port=5432' --user postgres --password postgres /build/${1}_typedefs.xml
+}
+
 wget --quiet "https://github.com/GMOD/Chado/archive/${BRANCH}.tar.gz"
 
 # Download ontologies
@@ -33,6 +40,15 @@ gmod_load_cvterms.pl -s GO /build/go.obo
 gmod_load_cvterms.pl -s SOFP load/etc/feature_property.obo
 gmod_load_cvterms.pl -s PO /build/po.obo
 gmod_load_cvterms.pl -s TAXRANK /build/taxrank.obo
+
+# Typedefs defined in each obo are loaded by gmod_load_cvterms.pl only if they are used
+# Following lines add the typedefs that were not added
+ln -s "/build/Chado-${BRANCH}/chado/load/etc/feature_property.obo" /build/feature_property.obo
+fix_typedefs so
+fix_typedefs go
+fix_typedefs feature_property
+fix_typedefs po
+fix_typedefs taxrank
 
 # Populate cvtermpath table
 psql -h localhost -p 5432 -U postgres < /opt/cvtermpath_fix.sql

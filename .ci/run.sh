@@ -9,7 +9,7 @@ make;
 docker run --rm --volume="${OUTPUT_DIRECTORY}":/host \
 	-e BRANCH=1.31 \
 	-e DBSTAG_TRACE=1 \
-	erasche/chado_schema_builder;
+	erasche/chado-schema-builder;
 # This will likely fail! But that's OK.
 retcode=$?
 # Because if it exits with code 42 then we built the image successfully (or hit some very strange error ;))

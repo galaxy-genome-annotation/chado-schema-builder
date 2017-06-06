@@ -1,1 +1,4 @@
 output/
+Dockerfile.inherit
+Makefile
+.ci/*

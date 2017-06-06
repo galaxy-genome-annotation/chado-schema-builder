@@ -1,4 +1,4 @@
-FROM quay.io/erasche/chado-schema-builder:latest
+FROM quay.io/erasche/chado-schema-builder-base:latest
 
 RUN mkdir -p $GMOD_ROOT /build
 WORKDIR /build

@@ -1,4 +1,4 @@
-FROM postgres
+FROM postgres:9.5
 MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -36,13 +36,3 @@ ENV CHADO_DB_PASSWORD postgres
 ENV CHADO_DB_PORT 5432
 ENV POSTGRES_PASSWORD postgres
 ENV GMOD_ROOT /usr/share/gmod/
-
-RUN mkdir -p $GMOD_ROOT /build
-WORKDIR /build
-ADD load.conf.tt2 /opt/load.conf.tt2
-ADD cvtermpath_fix.sql /opt/cvtermpath_fix.sql
-ADD update_urls.sql /opt/update_urls.sql
-ADD fix_relationshiptype_lc.diff /opt/fix_relationshiptype_lc.diff
-ADD obo_extract_typedefs.py /opt/obo_extract_typedefs.py
-
-ADD build.sh /docker-entrypoint-initdb.d/build.sh

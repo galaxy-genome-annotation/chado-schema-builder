@@ -1,7 +1,8 @@
 FROM quay.io/erasche/chado-schema-builder-base:latest
 
-RUN mkdir -p $GMOD_ROOT /build
-WORKDIR /build
+RUN mkdir -p $GMOD_ROOT /build && \
+    chown postgres:postgres /build
+
 ADD load.conf.tt2 /opt/load.conf.tt2
 ADD cvtermpath_fix.sql /opt/cvtermpath_fix.sql
 ADD update_urls.sql /opt/update_urls.sql

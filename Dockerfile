@@ -3,7 +3,6 @@ MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND noninteractive
 
-VOLUME ["/host"]
 # Pre-build packages
 RUN apt-get -qq update && \
     apt-get install --no-install-recommends -y wget  \
@@ -30,9 +29,14 @@ RUN apt-get -qq update && \
 
 ENV CHADO_DB_HOST=localhost \
 	CHADO_DB_NAME=postgres \
-	CHADO_DB_USERNAME=postgres \
-	PGDATA=/var/lib/postgresql/9.4/ \
 	CHADO_DB_PASSWORD=postgres \
 	CHADO_DB_PORT=5432 \
+	CHADO_DB_USERNAME=postgres \
+	PGDATABASE=postgres \
+	PGHOST=localhost \
+	PGPASSWORD=postgres \
+	PGPORT=5432 \
+	PGUSER=postgres \
+	PGDATA=/var/lib/postgresql/9.4/ \
 	POSTGRES_PASSWORD=postgres \
-	GMOD_ROOT=/usr/share/gmod/
+	GMOD_ROOT=/usr/share/gmod/ 

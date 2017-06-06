@@ -22,18 +22,15 @@ patch -p1 < /opt/fix_relationshiptype_lc.diff
 
 mv /opt/load.conf.tt2 /build/Chado-${BRANCH}/chado/load/tt2/load.conf.tt2
 # Remove old versions in case bad things happen
-rm -f /host/*
-
-VERSION=$(cat Makefile.PL | grep 'my $VERSION' | sed 's/.* = //g;s/;//';)
 
 yes | perl Makefile.PL GMOD_ROOT="$GMOD_ROOT" DEFAULTS=1 RECONFIGURE=1
 make
 make install
 make load_schema
 make prepdb
-pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres | gzip > "/host/chado-${VERSION}-no-onto.sql.gz"
+pg_dump --no-owner --no-acl postgres | gzip > "/build/chado-${BRANCH}-no-onto.sql.gz"
 echo "1" | make ontologies
-psql -h localhost -p 5432 -U postgres -c "UPDATE cvterm SET cv_id = 7 WHERE cv_id IN (SELECT cv_id FROM cv WHERE name='ro')"
+psql -c "UPDATE cvterm SET cv_id = 7 WHERE cv_id IN (SELECT cv_id FROM cv WHERE name='ro')"
 
 gmod_load_cvterms.pl -s SO /build/so.obo
 gmod_load_cvterms.pl -s GO /build/go.obo
@@ -52,20 +49,20 @@ fix_typedefs taxrank
 
 # Populate cvtermpath table
 psql -h localhost -p 5432 -U postgres < /opt/cvtermpath_fix.sql
-echo "select * from fill_cvtermpath('sequence');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('plant_anatomy');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('plant_structure_development_stage');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('taxonomic_rank');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('biological_process');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('molecular_function');" | psql -h localhost -p 5432 -U postgres
-echo "select * from fill_cvtermpath('cellular_component');" | psql -h localhost -p 5432 -U postgres
+echo "select * from fill_cvtermpath('sequence');" | psql
+echo "select * from fill_cvtermpath('plant_anatomy');" | psql
+echo "select * from fill_cvtermpath('plant_structure_development_stage');" | psql
+echo "select * from fill_cvtermpath('taxonomic_rank');" | psql
+echo "select * from fill_cvtermpath('biological_process');" | psql
+echo "select * from fill_cvtermpath('molecular_function');" | psql
+echo "select * from fill_cvtermpath('cellular_component');" | psql
 
 # Update links to external dbs
 psql -h localhost -p 5432 -U postgres < /opt/update_urls.sql
 
-pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres | gzip > "/host/chado-${VERSION}.sql.gz"
-psql -h localhost -p 5432 -U postgres -c 'ALTER SCHEMA public RENAME TO chado'
-pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres | gzip > "/host/chado-${VERSION}-tripal.sql.gz"
+pg_dump --no-owner --no-acl postgres | gzip > "/build/chado-${BRANCH}.sql.gz"
+psql -c 'ALTER SCHEMA public RENAME TO chado'
+pg_dump --no-owner --no-acl postgres | gzip > "/build/chado-${BRANCH}-tripal.sql.gz"
 
 echo "The schema build has completed. The container will now intentionally crash"
 exit 42;

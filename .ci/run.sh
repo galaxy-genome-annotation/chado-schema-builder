@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 # Set output directory if not set. This is parameterised as a variable as
 # running this job inside a jenkins container may require complex volume
 # setting if doing docker-next-to-docker.

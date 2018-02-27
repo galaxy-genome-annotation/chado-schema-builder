@@ -1,5 +1,6 @@
 #!/bin/bash
 set -ex
+cd /build/
 
 function fix_typedefs () {
     python /opt/obo_extract_typedefs.py /build/${1}.obo /build/${1}_typedefs.obo

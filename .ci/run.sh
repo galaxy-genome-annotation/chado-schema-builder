@@ -8,7 +8,7 @@ OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-$(pwd)/output}";
 # Then we build the image if any changes have been made
 make;
 # And we run the tool
-docker run --rm --volume="${OUTPUT_DIRECTORY}":/host \
+docker run --volume="${OUTPUT_DIRECTORY}":/host \
 	-e BRANCH=$VERSION \
 	-e DBSTAG_TRACE=1 \
 	erasche/chado-schema-builder;
@@ -25,6 +25,7 @@ if [ $retcode -eq 42 ]; then
 	docker cp ${CONTAINER_ID}:/build/chado-${VERSION}-no-onto.sql.gz chado-${VERSION}-no-onto.sql.gz
 	docker cp ${CONTAINER_ID}:/build/chado-${VERSION}.sql.gz chado-${VERSION}.sql.gz
 	docker cp ${CONTAINER_ID}:/build/chado-${VERSION}-tripal.sql.gz chado-${VERSION}-tripal.sql.gz
+	docker rm ${CONTAINER_ID}
 	exit 0;
 fi
 # Otherwise we exit with the job's exit code.

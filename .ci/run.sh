@@ -8,7 +8,7 @@ OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-$(pwd)/output}";
 # Then we build the image if any changes have been made
 make;
 # And we run the tool
-docker run --volume="${OUTPUT_DIRECTORY}":/host \
+docker run \
 	-e BRANCH=$VERSION \
 	-e DBSTAG_TRACE=1 \
 	erasche/chado-schema-builder;

@@ -1,4 +1,7 @@
 #!/bin/bash
+mkdir -p output
+mv chado*.gz output/
+
 set -ex
 OUTPUT_DIRECTORY="${OUTPUT_DIRECTORY:-$(pwd)/output}";
 if [ ! -e ghr  ]; then

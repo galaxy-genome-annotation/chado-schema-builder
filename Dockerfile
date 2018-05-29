@@ -1,5 +1,4 @@
 FROM postgres:9.5
-MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND noninteractive
 

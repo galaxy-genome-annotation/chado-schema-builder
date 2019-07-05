@@ -1,6 +1,4 @@
-# Chado Schema Builder
-
-[![Build Status](https://build.galaxyproject.eu/buildStatus/icon?job=usegalaxy-eu%2Fchado-schema-builder)](https://build.galaxyproject.eu/job/usegalaxy-eu/job/chado-schema-builder/)
+# Chado Schema Builder [![Build Status](https://build.galaxyproject.eu/buildStatus/icon?job=usegalaxy-eu%2Fchado-schema-builder)](https://build.galaxyproject.eu/job/usegalaxy-eu/job/chado-schema-builder/)
 
 This project provides a dockerfile to automatically build the chado database
 dumps. These schema dumps are necessary due to how much time and memory the

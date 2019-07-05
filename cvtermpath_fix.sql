@@ -1,5 +1,13 @@
 --- example: select * from fill_cvtermpath(7); where 7 is cv_id for an ontology
 --- fill path from the node to its children and their children
+
+--- Also a bugfix backported from https://github.com/GMOD/Chado/pull/105
+
+SELECT set_config('search_path',
+  string_agg(quote_ident(s),','),
+  false)
+FROM unnest(current_schemas(false)) s;
+
 CREATE OR REPLACE FUNCTION _fill_cvtermpath4node(BIGINT, BIGINT, BIGINT, BIGINT, INTEGER, BIGINT[]) RETURNS INTEGER AS
 '
 DECLARE
@@ -71,4 +79,26 @@ BEGIN
     RETURN 1;
 END;
 '
-LANGUAGE 'plpgsql';
+LANGUAGE 'plpgsql' SET SEARCH_PATH FROM CURRENT;
+
+CREATE OR REPLACE FUNCTION fill_cvtermpath(cv.name%TYPE) RETURNS INTEGER AS
+'
+DECLARE
+    cvname alias for $1;
+    cv_id   int;
+    rtn     int;
+BEGIN
+    SELECT INTO cv_id cv.cv_id from cv WHERE cv.name = cvname;
+    SELECT INTO rtn fill_cvtermpath(cv_id);
+    RETURN rtn;
+END;
+'
+LANGUAGE 'plpgsql' SET SEARCH_PATH FROM CURRENT;
+
+CREATE OR REPLACE FUNCTION boxrange (bigint, bigint) RETURNS box AS
+ 'SELECT box (create_point(CAST(0 AS bigint), $1), create_point($2,500000000))'
+LANGUAGE 'sql' IMMUTABLE SET SEARCH_PATH FROM CURRENT;
+
+CREATE OR REPLACE FUNCTION boxrange (bigint, bigint, bigint) RETURNS box AS
+ 'SELECT box (create_point($1, $2), create_point($1,$3))'
+LANGUAGE 'sql' IMMUTABLE SET SEARCH_PATH FROM CURRENT;

@@ -11,7 +11,7 @@ function fix_typedefs () {
 wget --quiet "https://github.com/GMOD/Chado/archive/${BRANCH}.tar.gz"
 
 # Download ontologies
-wget --quiet "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/so.obo"
+wget --quiet "https://raw.githubusercontent.com/The-Sequence-Ontology/SO-Ontologies/master/Ontology_Files/so.obo"
 wget --quiet "http://geneontology.org/ontology/go.obo"
 wget --quiet "https://raw.githubusercontent.com/Planteome/plant-ontology/master/po.obo"
 wget --quiet "https://raw.githubusercontent.com/phenoscape/taxrank/master/taxrank.obo"

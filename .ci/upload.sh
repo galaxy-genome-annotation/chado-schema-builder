@@ -11,4 +11,4 @@ if [ ! -e ghr  ]; then
 fi
 
 CHADO_VERSION=$(find "output" | grep -o 'chado-[/0-9.]*.sql.gz' | sed 's/chado-//g;s/\.sql\.gz//g;')
-./ghr -u hexylena -r chado-schema-builder "${CHADO_VERSION}-jenkins${BUILD_ID}" output
+./ghr -u galaxy-genome-annotation -r chado-schema-builder "${CHADO_VERSION}-jenkins${BUILD_ID}" output

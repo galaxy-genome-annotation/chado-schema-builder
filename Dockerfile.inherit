@@ -1,4 +1,4 @@
-FROM quay.io/erasche/chado-schema-builder-base:latest
+FROM quay.io/hexylena/chado-schema-builder-base:latest
 
 RUN mkdir -p $GMOD_ROOT /build && \
     chown postgres:postgres /build

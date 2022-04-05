@@ -13,7 +13,7 @@ RUN apt-get -qq update && \
         libarray-compare-perl libconvert-binary-c-perl libgraph-perl libgraphviz-perl \
         libsoap-lite-perl libsvg-perl libsvg-graph-perl libset-scalar-perl \
         libsort-naturally-perl libxml-sax-perl libxml-twig-perl libxml-writer-perl \
-        libyaml-perl libgd2-xpm-dev curl xsltproc netcat && \
+        libyaml-perl libgd2-xpm-dev curl xsltproc netcat python && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && rm -rf ~/.cache/ && \
     curl -L http://cpanmin.us | perl - App::cpanminus && \
     cpanm --notest --force Test::More Heap::Simple Heap::Simple::XS DBIx::DBStag GO::Parser && \
@@ -38,4 +38,4 @@ ENV CHADO_DB_HOST=localhost \
 	PGUSER=postgres \
 	PGDATA=/var/lib/postgresql/9.4/ \
 	POSTGRES_PASSWORD=postgres \
-	GMOD_ROOT=/usr/share/gmod/ 
+	GMOD_ROOT=/usr/share/gmod/
